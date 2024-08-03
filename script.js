@@ -55,14 +55,13 @@ function displayInfo(os, browser, screenRes, memory, cores, language, publicIP, 
 }
 
 function initMap(lat, lng) {
-    const map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: lat, lng: lng },
-        zoom: 10,
-    });
-    new google.maps.Marker({
-        position: { lat: lat, lng: lng },
-        map: map,
-    });
+    const map = L.map('map').setView([lat, lng], 10);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    L.marker([lat, lng]).addTo(map);
 }
 
 function getOS() {
