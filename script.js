@@ -2,6 +2,7 @@ document.getElementById('getInfoBtn').addEventListener('click', getUserInfo);
 
 function getUserInfo() {
     const infoDiv = document.getElementById('info');
+    infoDiv.classList.remove('hidden');
     infoDiv.innerHTML = "<p>Loading...</p>";
 
     // Operating System and Browser Details
@@ -20,7 +21,7 @@ function getUserInfo() {
     // Language
     const language = navigator.language;
 
-    // Fetch Public IP and General Location
+    // Fetch Public IP, ISP, and General Location
     fetch('https://ipapi.co/json/')
         .then(response => response.json())
         .then(data => {
@@ -28,14 +29,15 @@ function getUserInfo() {
             const location = `${data.city}, ${data.region}, ${data.country_name}`;
             const latitude = data.latitude;
             const longitude = data.longitude;
-            displayInfo(os, browser, screenRes, memory, cores, language, publicIP, location, latitude, longitude);
+            const isp = data.org;
+            displayInfo(os, browser, screenRes, memory, cores, language, publicIP, location, latitude, longitude, isp);
         })
         .catch(error => {
             console.error('Error fetching public IP and location:', error);
         });
 }
 
-function displayInfo(os, browser, screenRes, memory, cores, language, publicIP, location, latitude, longitude) {
+function displayInfo(os, browser, screenRes, memory, cores, language, publicIP, location, latitude, longitude, isp) {
     const infoDiv = document.getElementById('info');
     infoDiv.innerHTML = `
         <p><strong>Operating System:</strong> ${os}</p>
@@ -45,6 +47,7 @@ function displayInfo(os, browser, screenRes, memory, cores, language, publicIP, 
         <p><strong>CPU Cores:</strong> ${cores}</p>
         <p><strong>Language:</strong> ${language}</p>
         <p><strong>Public IP Address:</strong> ${publicIP}</p>
+        <p><strong>ISP:</strong> ${isp}</p>
         <p><strong>Location:</strong> ${location}</p>
         <div class="map-container">
             <div id="map"></div>
@@ -92,4 +95,4 @@ function getDeviceMemory() {
         const memorySize = window.navigator.deviceMemory || 'Not available';
         return memorySize;
     }
-} 
+}
