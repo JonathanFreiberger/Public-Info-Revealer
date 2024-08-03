@@ -55,3 +55,8 @@ button:hover {
     height: 300px;
     border-radius: 10px;
 }
+
+.hidden {
+    display: none;
+}
+
