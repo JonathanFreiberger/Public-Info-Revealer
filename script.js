@@ -12,7 +12,7 @@ function getUserInfo() {
     const screenRes = `${window.screen.width} x ${window.screen.height}`;
 
     // Device Memory
-    const memory = navigator.deviceMemory ? `${navigator.deviceMemory} GB` : 'Not available';
+    const memory = getDeviceMemory();
 
     // Cores
     const cores = navigator.hardwareConcurrency ? `${navigator.hardwareConcurrency} cores` : 'Not available';
@@ -77,9 +77,19 @@ function getOS() {
 function getBrowser() {
     const userAgent = window.navigator.userAgent;
     let browser = 'Unknown';
-    if (userAgent.indexOf('Chrome') !== -1) browser = 'Chrome';
+    if (userAgent.indexOf('Edge') !== -1) browser = 'Edge';
+    if (userAgent.indexOf('Chrome') !== -1 && userAgent.indexOf('Edge') === -1) browser = 'Chrome';
     if (userAgent.indexOf('Firefox') !== -1) browser = 'Firefox';
     if (userAgent.indexOf('Safari') !== -1 && userAgent.indexOf('Chrome') === -1) browser = 'Safari';
     if (userAgent.indexOf('MSIE') !== -1 || userAgent.indexOf('Trident') !== -1) browser = 'Internet Explorer';
     return browser;
+}
+
+function getDeviceMemory() {
+    if (navigator.deviceMemory) {
+        return `${navigator.deviceMemory} GB`;
+    } else {
+        const memorySize = window.navigator.deviceMemory || 'Not available';
+        return memorySize;
+    }
 }
