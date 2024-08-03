@@ -43,6 +43,7 @@ button:hover {
 
 #info p {
     margin: 10px 0;
+    word-wrap: break-word;
 }
 
 .map-container {
