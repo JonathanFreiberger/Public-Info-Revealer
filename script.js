@@ -92,4 +92,4 @@ function getDeviceMemory() {
         const memorySize = window.navigator.deviceMemory || 'Not available';
         return memorySize;
     }
-}
+} 
